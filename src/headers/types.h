@@ -1,21 +1,35 @@
-#include <stdlib.h>
-
-#define T_NULL (void*)0;
-#define S_NULL '\0';
-
-//Partially managed C string
-#ifndef PSTRING
-	#define PSTRING
-	typedef struct {
-		//Heap allocated value
-		char* value;
-	} pString;
+#ifndef TYPES
+	#define TRUE 1
+	#define FALSE 0
 #endif
 
-pString* pStringNew(){
-	return (pString*)malloc(sizeof(pString));
-}
+#ifndef PSTRING
+	#define PSTRING
+	typedef char* pString;
+#endif
 
-void pStringDelete(pString* pstring){
-	free((void*)pstring);
+#ifndef VARIABLE
+	#define VARIABLE
+typedef struct {
+        pString reference;
+        pString path;
+        pString value;
+        pString owner_hash;
+        unsigned long datetimeticks_created;
+        unsigned long datetimeticks_tocache;
+} variable;
+#endif
+
+#ifndef OWNER
+	#define OWNER
+typedef struct {
+} owner;
+#endif
+
+#ifndef MEMORY
+	#define MEMORY
+struct memory{
+        owner* owners[0];
+        variable* variables[0];
 };
+#endif
